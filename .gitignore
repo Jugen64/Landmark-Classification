@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+env/
+
+# Hugging Face cache
+.cache/
+
+# OS
+.DS_Store
+
+# data
+data/
