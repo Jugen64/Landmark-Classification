@@ -10,6 +10,12 @@ This project trains a convolutional neural network to classify images into 51 la
 
 ---
 
+## Motivation
+
+I'm obsessed with TimeGuessr, a game that gives you photographs and asks you to identify when and where they were taken. This classifier is my first step toward building an AI agent that can actually play it.
+
+---
+
 ## Dataset
 
 The model is trained on the Hugging Face dataset:
