@@ -4,12 +4,6 @@ Achieves ~94% validation accuracy across 51 landmark classes using a fine-tuned 
 
 ---
 
-## Overview
-
-This project trains a convolutional neural network to classify images into 51 landmark categories using transfer learning. The project was refactored to simplify the pipeline and make experiments easier to reproduce.
-
----
-
 ## Motivation
 
 I'm obsessed with TimeGuessr, a game that gives you photographs and asks you to identify when and where they were taken. This classifier is my first step toward building an AI agent that can actually play it.
@@ -19,33 +13,29 @@ I'm obsessed with TimeGuessr, a game that gives you photographs and asks you to 
 ## Dataset
 
 The model is trained on the Hugging Face dataset:
-
 - [`pemujo/GLDv2_Top_51_Categories`](https://huggingface.co/datasets/pemujo/GLDv2_Top_51_Categories)
 
-This dataset contains ~36k images across 51 landmark classes derived from the Google Landmarks Dataset v2.
-
-Each class corresponds to a unique landmark instance (identified by `landmark_id`). Since human-readable labels aren’t always available, the task is treated as instance-level classification.
+This dataset contains ~45k images across 51 landmark classes derived from the Google Landmarks Dataset v2, pre-split 80/20 into train and test sets. Each class corresponds to a unique landmark instance (e.g. Eiffel Tower, Niagara Falls, Edinburgh Castle).
 
 ---
 
 ## Approach
 
-- Used a pretrained ResNet-18 backbone pretrained on ImageNet
-- Replaced the final layer to match 51 landmark classes
-- Fine-tuned deeper layers by unfreezing `layer4`
-- Applied basic image augmentation (resize + horizontal flip)
-- Performed a randomized train/validation split with `train_test_split`
-
-The project loads image data from Hugging Face, applies preprocessing and augmentation, and trains a ResNet-18 model on a train/validation split.
+- Pretrained ResNet-18 backbone (ImageNet weights)
+- Final classification layer replaced to output 51 classes
+- `layer4` unfrozen for fine-tuning; all other layers frozen
+- Image augmentation: random horizontal flip + ImageNet normalization
+- LR scheduler: StepLR (step=3, gamma=0.1)
+- Uses the dataset's built-in train/test split
 
 ---
 
 ## Results
 
 - Validation Accuracy: ~94%
-- Train/Validation gap: ~4%
-- Consistently strong performance across most classes
-- Rapid convergence due to transfer learning
+- Most classes exceed 90% accuracy by epoch 2
+- Weakest class: St. Lawrence Market, Toronto (visually ambiguous indoor market)
+- Rapid convergence due to transfer learning — 85% val accuracy after epoch 0
 
 ---
 
@@ -65,23 +55,24 @@ python -m src.main
 
 ## Project Structure
 
-```
+```text
 src/
-  main.py
+  main.py                  # entry point
   data/
-    dataset.py         # script for downloading and handling the dataset and metadata
-    transforms.py      # image-preprocessing script(s)
+    dataset.py             # HuggingFace dataset loading and PyTorch Dataset wrapper
+    transforms.py          # image preprocessing and augmentation
   models/
-    landmark_model.py  # The ResNet-based CNN model
+    landmark_model.py      # ResNet-18 model definition
   training/
-    train.py           # training + evaluation
+    train.py               # training loop, evaluation, per-class accuracy
 scripts/
-  inspect_landmarks.py # misc. dataset inspection script
+  inspect_landmarks.py     # dataset inspection utilities
 ```
 
 ---
 
 ## Notes
 
-- Runs on CPU, CUDA, or Apple MPS depending on availability  
+- Runs on CPU, CUDA, or Apple MPS depending on availability
 - Dataset is cached locally (`~/.cache/huggingface/datasets`)
+- Trained weights available on Hugging Face Hub: [link to be added]
