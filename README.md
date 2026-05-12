@@ -75,4 +75,4 @@ scripts/
 
 - Runs on CPU, CUDA, or Apple MPS depending on availability
 - Dataset is cached locally (`~/.cache/huggingface/datasets`)
-- Trained weights available on Hugging Face Hub: [link to be added]
+- Trained weights available on Hugging Face Hub: [jblee64/landmark-classification-resnet18](https://huggingface.co/jblee64/landmark-classification-resnet18)
