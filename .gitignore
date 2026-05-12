@@ -7,7 +7,7 @@ __pycache__/
 env/
 
 # Hugging Face cache
-.cache/
+~/.cache/
 
 # OS
 .DS_Store
@@ -15,6 +15,5 @@ env/
 # data
 data/metadata.pkl
 
-# pycache
-__pycache__/
-*.pyc
+# best model
+best_model.pth
