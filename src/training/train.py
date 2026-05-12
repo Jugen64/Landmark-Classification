@@ -14,8 +14,9 @@ def run_model(model, train_loader, val_loader, criterion, optimizer, device, epo
 
         val_acc = evaluate(model, val_loader, device)
 
-        print(f"Train Acc: {train_acc:.4f} | Val Acc: {val_acc:.4f}")
-
+        val_loss, val_acc = evaluate(model, val_loader, criterion, device)
+        print(f"Train Acc: {train_acc:.4f} | Val Loss: {val_loss:.4f} | Val Acc: {val_acc:.4f}")
+        
         if val_acc > best_val:
             best_val = val_acc
             print(f"New best val: {best_val:.4f}")

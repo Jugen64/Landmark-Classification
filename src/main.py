@@ -26,7 +26,7 @@ def main():
     metadata, hf_dataset = load_metadata()
 
     ### split images into train and test sets
-    train_data, val_data = train_test_split(metadata, test_size=0.2, random_state=42)
+    train_data, val_data = train_test_split(metadata, test_size=0.2, random_state=67)
 
     print("Train size:", len(train_data))
     print("Val size:", len(val_data))
