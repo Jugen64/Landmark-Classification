@@ -14,3 +14,7 @@ env/
 
 # data
 data/metadata.pkl
+
+# pycache
+__pycache__/
+*.pyc
