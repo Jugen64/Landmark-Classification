@@ -49,20 +49,19 @@ def train_one_epoch(model, loader, optimizer, criterion, device):
     return correct / total
 
 
-def evaluate(model, loader, device):
+def evaluate(model, loader, criterion, device):
     model.eval()
-    correct, total = 0, 0
+    val_loss, correct, total = 0.0, 0, 0
 
     with torch.no_grad():
         for x, y in loader:
             x, y = x.to(device), y.to(device)
             logits = model(x)
-            preds = logits.argmax(dim=1)
+            val_loss += criterion(logits, y).item()
+            correct += (logits.argmax(dim=1) == y).sum().item()
+            total += y.size(0)
 
-            correct += (preds == y).sum().item()
-            total += x.size(0)
-
-    return correct / total
+    return val_loss / len(loader), correct / total
 
 
 def compute_per_class_accuracy(model, loader, device):
