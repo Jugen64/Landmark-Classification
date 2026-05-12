@@ -13,4 +13,4 @@ env/
 .DS_Store
 
 # data
-data/
+data/metadata.pkl

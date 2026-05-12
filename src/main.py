@@ -53,7 +53,7 @@ def main():
     num_classes = len(train_dataset.label_map)
     model = build_model(num_classes, unfreeze_layer4=True).to(device)
 
-    optimizer = optim.Adam(model.parameters(), lr=1e-4)
+    optimizer = optim.Adam(model.parameters(), lr=5e-5)
     criterion = torch.nn.CrossEntropyLoss()
 
     ### train model
